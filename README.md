@@ -1,5 +1,3 @@
-# ros_rgb_image_to_laserscan
-
 **ROS Package for Converting RGB Images to Depth and LaserScan Data**
 
 ## Description
