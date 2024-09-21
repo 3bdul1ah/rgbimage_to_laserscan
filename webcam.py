@@ -1,87 +1,51 @@
-import argparse
 import cv2
-import matplotlib
-import numpy as np
 import torch
-import os
+import numpy as np
+import matplotlib
+from ros_depth_anything_v2.depth_anything_v2.dpt import DepthAnythingV2
+import time
 
-from depth_anything_v2.dpt import DepthAnythingV2
-# i dont know how to make it run here its shown an error, u need to copy it and run it inside 'cd Depth-Anything-V2'
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Depth Anything V2 with Webcam')
-    parser.add_argument('--input-size', type=int, default=518)
-    parser.add_argument('--outdir', type=str, default='/Depth-Anything-V2/vis_depth')
-    parser.add_argument('--encoder', type=str, default='vitl', choices=['vits', 'vitb', 'vitl', 'vitg'])
-    parser.add_argument('--pred-only', dest='pred_only', action='store_true', help='only display the prediction')
-    parser.add_argument('--grayscale', dest='grayscale', action='store_true', help='do not apply colorful palette')
-    args = parser.parse_args()
+DEVICE = 'cuda' if torch.cuda.is_available() else 'mps' if torch.backends.mps.is_available() else 'cpu'
 
-    # Select device (GPU if available)
-    DEVICE = 'cuda' if torch.cuda.is_available() else 'mps' if torch.backends.mps.is_available() else 'cpu'
+model_configs = {
+    'vits': {'encoder': 'vits', 'features': 64, 'out_channels': [48, 96, 192, 384]},
+    'vitb': {'encoder': 'vitb', 'features': 128, 'out_channels': [96, 192, 384, 768]},
+    'vitl': {'encoder': 'vitl', 'features': 256, 'out_channels': [256, 512, 1024, 1024]},
+    'vitg': {'encoder': 'vitg', 'features': 384, 'out_channels': [1536, 1536, 1536, 1536]}
+}
 
-    # Model configurations
-    model_configs = {
-        'vits': {'encoder': 'vits', 'features': 64, 'out_channels': [48, 96, 192, 384]},
-        'vitb': {'encoder': 'vitb', 'features': 128, 'out_channels': [96, 192, 384, 768]},
-        'vitl': {'encoder': 'vitl', 'features': 256, 'out_channels': [256, 512, 1024, 1024]},
-        'vitg': {'encoder': 'vitg', 'features': 384, 'out_channels': [1536, 1536, 1536, 1536]}
-    }
+encoder = 'vits' # or 'vits', 'vitb', 'vitg'
 
-    # Load model
-    depth_anything = DepthAnythingV2(**model_configs[args.encoder])
-    depth_anything.load_state_dict(torch.load(f'/Depth-Anything-V2/checkpoints/depth_anything_v2_{args.encoder}.pth', map_location='cpu'))
-    depth_anything = depth_anything.to(DEVICE).eval()
+model = DepthAnythingV2(**model_configs[encoder])
+model.load_state_dict(torch.load(f'ros_depth_anything_v2/checkpoints/depth_anything_v2_{encoder}.pth', map_location='cpu'))
+model = model.to(DEVICE).eval()
 
-    # Create output directory
-    os.makedirs(args.outdir, exist_ok=True)
+# raw_img = cv2.imread('your/image/path')
+ # HxW raw depth map in numpy
 
-    # Colormap for visualizing depth
-    cmap = matplotlib.colormaps.get_cmap('Spectral_r')
+cam = cv2.VideoCapture(0)
+cmap = matplotlib.colormaps.get_cmap('Spectral_r')
 
-    # Start webcam capture
-    cap = cv2.VideoCapture(0)  # Use webcam ID 0 (usually the default webcam)
+# used to record the time when we processed last frame
+prev_frame_time = 0
 
-    if not cap.isOpened():
-        print("Error: Could not open webcam.")
-        exit()
+# used to record the time at which we processed current frame
+new_frame_time = 0
 
-    frame_counter = 0
-    while True:
-        # Capture frame-by-frame
-        ret, frame = cap.read()
-        if not ret:
-            print("Error: Could not read frame from webcam.")
-            break
+while True:
+    ret, frame = cam.read()
 
-        # Infer depth from the captured frame
-        depth = depth_anything.infer_image(frame, args.input_size)
+    depth = model.infer_image(frame)
 
-        # Normalize depth map to 0-255 for visualization
-        depth = (depth - depth.min()) / (depth.max() - depth.min()) * 255.0
-        depth = depth.astype(np.uint8)
+    depth = (depth - depth.min()) / (depth.max() - depth.min()) * 255.0
+    depth = depth.astype(np.uint8)
 
-        # Convert depth to grayscale or color
-        if args.grayscale:
-            depth_visual = np.repeat(depth[..., np.newaxis], 3, axis=-1)
-        else:
-            depth_visual = (cmap(depth)[:, :, :3] * 255)[:, :, ::-1].astype(np.uint8)
+    depth = (cmap(depth)[:, :, :3] * 255)[:, :, ::-1].astype(np.uint8)
+    new_frame_time = time.time()
+    fps = int(1/(new_frame_time-prev_frame_time))
+    prev_frame_time = new_frame_time
 
-        # Combine original frame and depth map side-by-side if pred_only is not set
-        if not args.pred_only:
-            split_region = np.ones((frame.shape[0], 50, 3), dtype=np.uint8) * 255
-            combined_result = cv2.hconcat([frame, split_region, depth_visual])
-            cv2.imshow('Depth Prediction', combined_result)
-        else:
-            cv2.imshow('Depth Prediction', depth_visual)
-
-        # Save the frame if needed
-        frame_counter += 1
-        cv2.imwrite(os.path.join(args.outdir, f'frame_{frame_counter}.png'), depth_visual)
-
-        # Press 'q' to quit the webcam preview
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
-    # Release the webcam and close windows
-    cap.release()
-    cv2.destroyAllWindows()
+    cv2.putText(depth,str(fps),(40,40),cv2.FONT_HERSHEY_SIMPLEX,1,(0, 0, 255),2)
+    cv2.imshow('Camera', depth)
+    if cv2.waitKey(1) == ord('q'):
+        break
