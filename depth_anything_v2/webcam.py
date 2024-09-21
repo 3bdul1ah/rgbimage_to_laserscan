@@ -1,7 +1,7 @@
 import argparse
 import cv2
 import matplotlib
-import numpy as np
+import numpy as np  
 import torch
 import os
 
