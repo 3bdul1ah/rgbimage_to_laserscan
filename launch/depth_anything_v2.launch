@@ -1,0 +1,8 @@
+<launch>
+
+<node name="rgb_to_depth" pkg="depth_anything_v2_ros" type="depth_anything_node.py">
+    <param name="image_topic" value="/usb_cam/image_raw"/>
+    <param name="depth_topic" value="/depth/image_raw"/>
+</node>
+
+</launch>

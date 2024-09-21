@@ -1,0 +1,22 @@
+<launch>
+
+<node name="usb_cam" pkg="usb_cam" type="usb_cam_node" >
+    <param name="video_device" value="/dev/video0" />
+    <param name="image_width" value="640" />
+    <param name="image_height" value="480" />
+    <param name="pixel_format" value="yuyv" />
+    <param name="camera_frame_id" value="camera_frame" />
+    <param name="io_method" value="mmap"/>
+</node>
+
+<node pkg="tf" type="static_transform_publisher" name="base_link_camera" args="0 0 0 0 0 0 /baselink /camera_frame 100"/> 
+
+
+<node name="rgb_to_depth" pkg="depth_anything_v2_ros" type="depth_anything_node.py">
+    <param name="image_topic" value="/usb_cam/image_raw"/>
+    <param name="camera_info" value="/usb_cam/camera_info"/>
+    <param name="depth_topic" value="/depth/image_raw"/>
+    <param name="depth_info_topic" value="/depth//depth/camera_info"/>
+</node>
+
+</launch>
