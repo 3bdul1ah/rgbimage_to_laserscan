@@ -3,9 +3,9 @@ import cv2
 import torch
 import numpy as np
 import matplotlib
-from depth_anything_v2.dpt import DepthAnythingV2
+from Depth_Anything_V2.depth_anything_v2.dpt import DepthAnythingV2
 import sys
-import rospy 
+import rospy
 from sensor_msgs.msg import Image, CameraInfo
 from cv_bridge import  CvBridge, CvBridgeError
 import rospkg
@@ -96,8 +96,3 @@ def main(args):
 if __name__ == '__main__':
     main(sys.argv)
 
-
-
-
-   
-    
