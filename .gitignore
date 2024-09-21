@@ -9,7 +9,7 @@ build/
 *.whl
 
 # VSCode
-.vscode/
+.vscode
 
 # Environment variables
 .env
