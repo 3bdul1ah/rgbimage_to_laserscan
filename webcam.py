@@ -4,13 +4,13 @@ import matplotlib
 import numpy as np
 import torch
 import os
- 
+
 from depth_anything_v2.dpt import DepthAnythingV2
 # i dont know how to make it run here its shown an error, u need to copy it and run it inside 'cd Depth-Anything-V2'
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Depth Anything V2 with Webcam')
     parser.add_argument('--input-size', type=int, default=518)
-    parser.add_argument('--outdir', type=str, default='./vis_depth')
+    parser.add_argument('--outdir', type=str, default='/Depth-Anything-V2/vis_depth')
     parser.add_argument('--encoder', type=str, default='vitl', choices=['vits', 'vitb', 'vitl', 'vitg'])
     parser.add_argument('--pred-only', dest='pred_only', action='store_true', help='only display the prediction')
     parser.add_argument('--grayscale', dest='grayscale', action='store_true', help='do not apply colorful palette')
@@ -29,7 +29,7 @@ if __name__ == '__main__':
 
     # Load model
     depth_anything = DepthAnythingV2(**model_configs[args.encoder])
-    depth_anything.load_state_dict(torch.load(f'checkpoints/depth_anything_v2_{args.encoder}.pth', map_location='cpu'))
+    depth_anything.load_state_dict(torch.load(f'/Depth-Anything-V2/checkpoints/depth_anything_v2_{args.encoder}.pth', map_location='cpu'))
     depth_anything = depth_anything.to(DEVICE).eval()
 
     # Create output directory
