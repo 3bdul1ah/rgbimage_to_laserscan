@@ -1,4 +1,4 @@
-# ROS Package: RGB to Depth to LaserScan Converter
+# ROS Package: RGB to DRGB to LaserScan Converter
 
 ## Description
 This ROS package enables the conversion of RGB images to depth images using [Depth Anything V2](https://github.com/DepthAnything/Depth-Anything-V2) and subsequently transforms the depth image into LaserScan data.
