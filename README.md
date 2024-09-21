@@ -12,7 +12,7 @@ This ROS package enables the conversion of RGB images to depth images using [Dep
 
 ## Nodes
 
-### RGB to Depth Conversion
+- ### RGB to Depth Conversion
 
 **Subscribed Topics:**
 - **RGB Image (`sensor_msgs/Image`):**
@@ -32,14 +32,14 @@ This ROS package enables the conversion of RGB images to depth images using [Dep
   - **Topic:** `depth_info_topic` (default: `/depth/camera_info`)
   - Contains intrinsic parameters for the depth camera.
 
----
 
-### Depth to LaserScan Conversion
+
+- ### Depth to LaserScan Conversion
 
 **Subscribed Topics:**
 - **Depth Image (`sensor_msgs/Image`):**
   - **Topic:** `/depth/image_raw`
-  - Input depth image conforming to REP 118.
+  - Contains depth image.
 
 - **Camera Info (`sensor_msgs/CameraInfo`):**
   - **Topic:** `/depth/camera_info`
