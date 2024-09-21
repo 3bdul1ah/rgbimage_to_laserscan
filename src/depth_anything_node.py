@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import cv2
 import torch
 import numpy as np
@@ -25,7 +25,7 @@ model_configs = {
 encoder = 'vits' # or 'vits', 'vitb', 'vitg'
 pkg = rospack.get_path('depth_anything_v2_ros')
 model = DepthAnythingV2(**model_configs[encoder])
-model.load_state_dict(torch.load(f'{pkg}/src/Depth_Anything_V2/checkpoints/depth_anything_v2_{encoder}.pth', map_location='cpu'))
+model.load_state_dict(torch.load(f'{pkg}/src/Depth_Anything_V2/checkpoints/depth_anything_v2_{encoder}.pth', map_location='cpu', weights_only=True))
 model = model.to(DEVICE).eval()
 
 

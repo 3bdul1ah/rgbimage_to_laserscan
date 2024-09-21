@@ -9,7 +9,7 @@
     <param name="io_method" value="mmap"/>
 </node>
 
-<node pkg="tf" type="static_transform_publisher" name="base_link_camera" args="0 0 0 0 0 0 /baselink /camera_frame 100"/> 
+<node pkg="tf" type="static_transform_publisher" name="base_link_camera" args="0 0 0 0 0 0 /baselink /camera_frame 100"/>
 
 
 <node name="rgb_to_depth" pkg="depth_anything_v2_ros" type="depth_anything_node.py">
@@ -18,5 +18,9 @@
     <param name="depth_topic" value="/depth/image_raw"/>
     <param name="depth_info_topic" value="/depth//depth/camera_info"/>
 </node>
+
+
+<node name="rviz" pkg="rviz" type="rviz" args="-d $(find depth_anything_v2_ros)/rviz/webcam.rviz"/>
+
 
 </launch>
