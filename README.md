@@ -16,17 +16,17 @@ This ROS package enables the conversion of RGB images to depth images using [Dep
 
 **Subscribed Topics:**
 - **RGB Image (`sensor_msgs/Image`):**
-  - **Topic:** `image_topic` (default: `/usb_cam/image_raw`)
+  - **Topic:** (`/usb_cam/image_raw`)
 
 - **Camera Info (`sensor_msgs/CameraInfo`):**
-  - **Topic:** `camera_info` (default: `/usb_cam/camera_info`)
+  - **Topic:** (`/usb_cam/camera_info`)
 
 **Published Topics:**
 - **Depth Image (`sensor_msgs/Image`):**
-  - **Topic:** `depth_topic` (default: `/depth/image_raw`)
+  - **Topic:** (`/depth/image_raw`)
 
 - **Depth Camera Info (`sensor_msgs/CameraInfo`):**
-  - **Topic:** `depth_info_topic` (default: `/depth/camera_info`)
+  - **Topic:** (`/depth/camera_info`)
 
 - ### Depth to LaserScan Conversion
 
