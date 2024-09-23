@@ -42,6 +42,38 @@ This ROS package enables the conversion of RGB images to depth images using [Dep
   - **Topic:** `scan`
 
 ---
-
 ## Installation
-Coming soon.
+
+### 1. Set up Depth Anything V2
+
+```bash
+cd src
+git clone https://github.com/DepthAnything/Depth-Anything-V2.git
+cd Depth-Anything-V2
+pip install -r requirements.txt
+mkdir checkpoints
+```
+
+Download the small model checkpoint:
+
+### 2. Install USB Camera for ROS Noetic
+
+```bash
+sudo apt update
+sudo apt install ros-noetic-usb-cam
+```
+
+### 3. Install depthimage_to_laserscan Package
+
+```bash
+sudo apt install ros-noetic-depthimage-to-laserscan
+```
+
+### 4. Run the Project
+
+After completing the installation steps, you can run the project using:
+
+```bash
+roslaunch depth_anything_v2 webcam_laser.launch
+```
+
