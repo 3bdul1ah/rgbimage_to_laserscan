@@ -73,6 +73,6 @@ source devel/setup.bash
 After completing the installation steps, you can run the project using:
 
 ```bash
-roslaunch depth_anything_v2 webcam_laser.launch
+roslaunch depth_anything_v2_ros webcam_laser.launch
 ```
 
