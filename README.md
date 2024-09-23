@@ -59,6 +59,7 @@ This package is built for ROS Noetic, but it might build for ROS Melodic too. Ad
 sudo apt update
 sudo apt install ros-noetic-usb-cam
 sudo apt install ros-noetic-depthimage-to-laserscan
+pip install opencv-python torch torchvision
 ```
 ### 2. Building
 ```bash
