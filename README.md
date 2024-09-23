@@ -7,8 +7,6 @@ This ROS package enables the conversion of RGB images to depth images using [Dep
 - **SLAM:** Uses an RGB camera for 2D mapping, so no additional **LiDAR** sensor is required.
 - **VSLAM:** Uses an RGB camera for visual SLAM, so a **depth camera** is not necessary.
 - ..
-- ..
-
 
 ## Nodes
 
@@ -44,19 +42,31 @@ This ROS package enables the conversion of RGB images to depth images using [Dep
 ---
 ## Installation
 
-### 1. Install USB Camera for ROS Noetic
+### Dependencies 
+This package is built for ROS Noetic, but it might build for ROS Melodic too. Additionally, the package depends on following packages and python libraries:
+
+#### ROS Packages
+ - [usb-cam](https://wiki.ros.org/usb_cam)
+ - [depthimage_to_laserscan](https://wiki.ros.org/depthimage_to_laserscan)
+#### Python Libraries
+ - torch 
+ - torchvision
+ - opencv-python
+
+### 1. Install Dependencies
 
 ```bash
 sudo apt update
 sudo apt install ros-noetic-usb-cam
-```
-
-### 2. Install depthimage_to_laserscan Package
-
-```bash
 sudo apt install ros-noetic-depthimage-to-laserscan
 ```
-
+### 2. Building
+```bash
+cd ~/catkin_ws/src
+git clone https://github.com/3bdul1ah/rgbimage_to_laserscan
+cd .. && catkin_make
+source devel/setup.bash
+```
 ### 3. Run the Project
 
 After completing the installation steps, you can run the project using:
