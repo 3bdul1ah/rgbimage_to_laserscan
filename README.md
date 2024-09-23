@@ -3,7 +3,7 @@
 ## Description
 This ROS package enables the conversion of RGB images to depth images using [Depth Anything V2](https://github.com/DepthAnything/Depth-Anything-V2) and subsequently transforms the depth image into LaserScan data.
 
-## Features
+## Features Addition
 - **SLAM:** Uses an RGB camera for 2D mapping, so no additional **LiDAR** sensor is required.
 - **VSLAM:** Uses an RGB camera for visual SLAM, so a **depth camera** is not necessary.
 - ..
