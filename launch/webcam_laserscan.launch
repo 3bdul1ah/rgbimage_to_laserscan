@@ -11,7 +11,7 @@
 
 <node pkg="tf" type="static_transform_publisher" name="base_link_camera" args="0 0 0 0 0 0 /base_link /camera_frame 100"/>
 
-<node name="rgb_to_depth" pkg="depth_anything_v2_ros" type="depth_anything_node.py">
+<node name="rgb_to_depth" pkg="depth_anything_v2_ros" type="depth_anything_node.py" output="screen">
     <param name="image_topic" value="/usb_cam/image_raw"/>
     <param name="depth_topic" value="/depth/image_raw"/>
 </node>
@@ -25,10 +25,10 @@
 
     <!-- PARAMETERS: -->
     <!-- These are the default values. -->
-    <param name="scan_height"     type="int"    value="5"/> <!-- default: 1 pixel. Number of pixel rows used to generate laser scan. -->
+    <param name="scan_height"     type="int"    value="20"/> <!-- default: 1 pixel. Number of pixel rows used to generate laser scan. -->
     <param name="scan_time"       type="double" value="0.033"/> <!-- default:0.033, 30 FPS . Time between scans. -->
-    <param name="range_min"       type="double" value="0.5"/> <!--default:0.45m. Ranges less than this are considered -Inf. -->
-    <param name="range_max"       type="double" value="10.0"/> <!--default: 10m. Ranges less than this are considered +Inf. -->
+    <param name="range_min"       type="double" value="0.2"/> <!--default:0.45m. Ranges less than this are considered -Inf. -->
+    <param name="range_max"       type="double" value="30.0"/> <!--default: 10m. Ranges less than this are considered +Inf. -->
     <param name="output_frame_id" type="str"    value="base_link"/> <!--default: camera_depth_frame. Frame id of the laser scan. -->
 
   </node>

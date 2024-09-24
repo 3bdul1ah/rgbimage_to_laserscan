@@ -29,6 +29,17 @@ model.load_state_dict(torch.load(f'{pkg}/src/Depth_Anything_V2/checkpoints/depth
 model = model.to(DEVICE).eval()
 
 
+def translate(value, leftMin, leftMax, rightMin, rightMax):
+    # Figure out how 'wide' each range is
+    leftSpan = leftMax - leftMin
+    rightSpan = rightMax - rightMin
+
+    # Convert the left range into a 0-1 range (float)
+    valueScaled = (value - leftMin) / leftSpan
+
+    # Convert the 0-1 range into a value in the right range.
+    return rightMin + (valueScaled * rightSpan)
+
 class image_converter:
 
   def __init__(self):
@@ -67,11 +78,14 @@ class image_converter:
       print(e)
 
     depth = model.infer_image(cv_image)
-    # depth = (depth - depth.min()) / (depth.max() - depth.min()) * 255.0
+    depth = (depth - depth.min()) / (depth.max() - depth.min()) * 255.0
+    depth = 255.0 - depth
+    depth = translate(depth,0,255.0, 0.0, 5.0)
+
     depth = depth.astype(np.float32)
 
     # cv2.imshow("Image window", depth)
-    # cv2.waitKey(3)
+    # cv2.waitKey(3)S
     time_now = rospy.Time.now()
     img_msg = self.bridge.cv2_to_imgmsg(depth, "32FC1")
     img_msg.header.stamp = time_now
