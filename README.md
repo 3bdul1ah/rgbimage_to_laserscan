@@ -70,7 +70,7 @@ source devel/setup.bash
 ```
 ### 3. Run the Project
 
-After completing the installation steps, you can run the project using:
+After completing the installation steps, make sure you calibrate your camera using the instructions [here](https://wiki.ros.org/camera_calibration). You can then run the example:
 
 ```bash
 roslaunch depth_anything_v2_ros webcam_laser.launch
