@@ -64,7 +64,7 @@ pip install opencv-python torch torchvision
 ### 2. Building
 ```bash
 cd ~/ros2_ws/src
-git clone https://github.com/3bdul1ah/rgbimage_to_laserscan
+git clone -b ros2 https://github.com/3bdul1ah/rgbimage_to_laserscan
 cd .. && colcon build
 source install/setup.bash
 ```
