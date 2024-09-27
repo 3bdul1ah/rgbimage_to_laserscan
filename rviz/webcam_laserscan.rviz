@@ -5,6 +5,7 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /DepthImage1
+        - /LaserScan1
       Splitter Ratio: 0.5
     Tree Height: 140
   - Class: rviz/Selection
@@ -83,8 +84,8 @@ Visualization Manager:
       Axis: Z
       Channel Name: intensity
       Class: rviz/LaserScan
-      Color: 255; 255; 255
-      Color Transformer: Intensity
+      Color: 204; 0; 0
+      Color Transformer: FlatColor
       Decay Time: 0
       Enabled: true
       Invert Rainbow: false
@@ -95,7 +96,7 @@ Visualization Manager:
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.009999999776482582
+      Size (m): 0.05000000074505806
       Style: Flat Squares
       Topic: /scan
       Unreliable: false
@@ -171,4 +172,4 @@ Window Geometry:
     collapsed: false
   Width: 1200
   X: 408
-  Y: 79
+  Y: 42

@@ -3,7 +3,7 @@ import cv2
 import torch
 import numpy as np
 import matplotlib
-from Depth_Anything_V2.depth_anything_v2.dpt import DepthAnythingV2
+from Depth_Anything_V2.metric_depth.depth_anything_v2.dpt import DepthAnythingV2
 import sys
 import rospy
 from sensor_msgs.msg import Image, CameraInfo
@@ -72,7 +72,7 @@ class image_converter:
 
   def callback(self,data):
     try:
-      cv_image = self.bridge.imgmsg_to_cv2(data, desired_encoding="passthrough")
+      cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
     except CvBridgeError as e:
       print(e)
 
@@ -103,3 +103,4 @@ def main(args):
 
 if __name__ == '__main__':
     main(sys.argv)
+
