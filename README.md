@@ -43,7 +43,7 @@ This ROS package enables the conversion of RGB images to depth images using [Dep
 ## Installation
 
 ### Dependencies 
-This package is built for ROS Foxy, but it might build for subsequent versions too. Additionally, the package depends on following packages and python libraries:
+This package is built for ROS Foxy, but it might build for subsequent versions too. It is recommended to [calibrate](https://docs.ros.org/en/rolling/p/camera_calibration/) your camera for the best perfomance. Additionally, the package depends on following packages and python libraries:
 
 #### ROS Packages
  - [usb-cam](https://wiki.ros.org/usb_cam)
@@ -73,6 +73,6 @@ source install/setup.bash
 After completing the installation steps, you can then run the example:
 
 ```bash
-ros2 launch depth_anything_v2_ros webcam_laserscan.launch
+ros2 launch depth_anything_v2_ros2 webcam_laserscan.launch
 ```
 
